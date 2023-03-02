@@ -11,7 +11,8 @@ import random
 import numpy as np
 
 def player(prev_opponent_play, wins=[], losses=[], ties=[], iteration=[], opponent_history=[], player_history=[], train=True):
-    num = 100
+    num=100
+    _span=99
     if prev_opponent_play == '':
         prev_opponent_play='P'
       
@@ -51,7 +52,9 @@ def player(prev_opponent_play, wins=[], losses=[], ties=[], iteration=[], oppone
     iteration.append(len(player_history))
 
     if len(opponent_history)>=num:
-      
+      opponent_history=opponent_history[:-_span]
+      player_history=player_history[:-_span]
+      wins=wins[:-_span]
       move_to_num = {'R': 0, 'P': 1, 'S': 2}
       player_history = [move_to_num[move] for move in player_history]
       y = opponent_history

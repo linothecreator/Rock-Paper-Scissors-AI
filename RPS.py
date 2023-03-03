@@ -10,13 +10,16 @@ from sklearn.tree import DecisionTreeClassifier
 import random
 import numpy as np
 
-def player(prev_opponent_play, wins=[], losses=[], ties=[], iteration=[], opponent_history=[], player_history=[], train=True):
-    num=500
-    _span=400
+def player(prev_opponent_play, wins=[], losses=[], ties=[], iteration=[], opponent_history=[], player_history=[], counter=[0], train=True):
+    num=100
+    _span=50
     if prev_opponent_play == '':
-        prev_opponent_play='P'
+        prev_opponent_play=random.choice(['R', 'P', 'S'])
       
-    guess = random.choice(['R', 'P', 'S'])
+    counter[0] += 1
+    choices = ["R", "R", "P", "P", "S"]
+    guess=choices[counter[0] % len(choices)]
+    
 
 #Determine Wins
     def getoutcome(playermove, opponent_move):
@@ -63,12 +66,14 @@ def player(prev_opponent_play, wins=[], losses=[], ties=[], iteration=[], oppone
       y = np.array([opponent_history]).T
       X = np.array([wins, player_history]).T
       # print(X)
-      X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.1, random_state=42)
+      X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.1, random_state=41)
       model = DecisionTreeClassifier()
-      model.fit(X_train, y_train)
-      y_pred = model.predict(X_test)
-      accuracy = accuracy_score(y_test, y_pred)
-      print(accuracy)
+      # model.fit(X_train, y_train)
+      model.fit(X, y)
+      # y_pred = model.predict(X_test)
+      y_pred = model.predict(X)
+      # accuracy = accuracy_score(y_test, y_pred)
+      # print(accuracy)
       num_to_move = {0: 'R', 1: 'P',  2: 'S'}
       prediction = [num_to_move[move] for move in y_pred]
       # print(prediction[-1])

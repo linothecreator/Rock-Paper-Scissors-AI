@@ -11,8 +11,8 @@ import random
 import numpy as np
 
 def player(prev_opponent_play, wins=[], losses=[], ties=[], iteration=[], opponent_history=[], player_history=[], counter=[0], train=True):
-    num=100
-    _span=50
+    num=200
+    _span=199
     if prev_opponent_play == '':
         prev_opponent_play=random.choice(['R', 'P', 'S'])
       
@@ -77,7 +77,20 @@ def player(prev_opponent_play, wins=[], losses=[], ties=[], iteration=[], oppone
       num_to_move = {0: 'R', 1: 'P',  2: 'S'}
       prediction = [num_to_move[move] for move in y_pred]
       # print(prediction[-1])
-      guess = prediction[-1]
+      prediction = prediction[-1]
+
+      #beats quincy
+      # ideal_response = {'P': 'R', 'R': 'S', 'S': 'P'}
+
+      #beats abbey
+      # ideal_response = {'P': 'P', 'R': 'R', 'S': 'S'}
+      
+      #beats mruguesh
+      # ideal_response = {'P': 'S', 'R': 'P', 'S': 'R'}
+      # prediction = ideal_response[prediction]
+      
+      
+      guess = prediction
       
       
     

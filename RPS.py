@@ -31,24 +31,24 @@ def player(prev_opponent_play,
              "SP": 0,
              "SS": 0,
            }]):
-  num = 99
+  num = 5
   _span = 199
   if prev_opponent_play == '':
-    prev_opponent_play = random.choice(['R', 'P', 'S'])
+    prev_opponent_play = 'S'
 
   counter[0] += 1
   choices = ["R", "P", "S", "P", "S"]
   guess = choices[counter[0] % len(choices)]
 
-  # _w = wins.count('1')
-  # _tot = len(iteration)
-  # if _tot !=0:
-  #   win_rate=_w/_tot
-  #   if len(wins)==num:
-  #     print(win_rate)
-  #     print(wins.count('1'))
-  #     print(losses.count('1'))
-  #     print(ties.count('1'))
+  _w = wins.count('1')
+  _tot = wins.count('1') + losses.count('1')
+  if _tot !=0:
+    win_rate=_w/_tot
+    print('my_win_rate', win_rate)
+
+  print('player: ', player_history)
+  print('opponent: ', opponent_history)
+
 
   # Counter ABBEY
   #======================================================================
@@ -90,8 +90,9 @@ def player(prev_opponent_play,
 
 # Record Result
 
-  def getresults(playerhistory, opponent_history):
-    outcome = getoutcome(playerhistory[-1], opponent_history[-1])
+  def getresults(player_history, opponent_history):
+    outcome = getoutcome(player_history[-2], opponent_history[-1])
+    print(player_history[-2], opponent_history[-1])
     if outcome == "win":
       wins.append("1")
       losses.append("0")
@@ -106,10 +107,12 @@ def player(prev_opponent_play,
       ties.append("1")
 
   # Update State
+
   player_history.append(guess)
   opponent_history.append(prev_opponent_play)
-  getresults(player_history, opponent_history)
-  iteration.append(len(player_history))
+  # iteration.append(len(player_history))
+  if len(player_history) >= 2:
+    getresults(player_history, opponent_history)
 
   if len(opponent_history) >= num:
     opponent_history = opponent_history[-_span:-1]
